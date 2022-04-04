@@ -1,12 +1,11 @@
-#identifies time series values that deviate from the common behavior and patterns of the data
-
+# Identifies time series values that deviate from the common behavior and patterns of the data
 
 view: arima_detect_anomalies {
   label: "[8] BQML: Detect Anomalies"
   sql_table_name: ML.DETECT_ANOMALIES(MODEL @{looker_temp_dataset_name}.{% parameter model_name.select_model_name %}_arima_model_{{ _explore._name }}
-  , STRUCT({% parameter set_anomaly_prob_threshold %} AS anomaly_prob_threshold))
+                    , STRUCT({% parameter set_anomaly_prob_threshold %} AS anomaly_prob_threshold)
+                  )
   ;;
-
 
   parameter: set_anomaly_prob_threshold {
     label: "Anomaly Probability Threshold (optional)"
