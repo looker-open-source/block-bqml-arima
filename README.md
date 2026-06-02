@@ -1,12 +1,12 @@
 # ReadMe for LookML Developers
 
+This is not an officially supported Google product. This project is not eligible for the [Google Open Source Software Vulnerability Rewards Program](https://bughunters.google.com/open-source-security).
 
 ## About this LookML Block
 
 Forecasting future points in a time series often provides tremendous value to a business. Imagine what accurate predictions of monthly sales, quarterly expenses, hourly inbound calls, daily product demand could do for your business--the applications are endless.
 
 An **ARIMA** (autoregressive integrated moving average) model is a popular tool among data scientists for estimating future demand. This type of model uses past values in a time series to predict (forecast) future points while automatically detecting and correcting for anomalies, seasonality, and holiday effects. With this Block, Looker developers can add this advanced analytical capability into new or existing Explores with a simple step-by-step workflow. Business users can use Looker to create a time-series model, evaluate the model, and access forecasts in dashboards or custom analyses.
-
 
 This Block integrates the **BigQuery ML ARIMA PLUS model** including the following functionality:
 - Infer the data frequency of the time series
@@ -20,10 +20,7 @@ This Block integrates the **BigQuery ML ARIMA PLUS model** including the followi
 
 With Looker + BQML, the forecasts and analysis are directly in the hands of business analysts.
 
----
 > <b><font size = "3" color="#174EA6"> <i class='fa fa-info-circle'></i>  Reach out to your Looker account team if you would like to partner with Looker Professional Services to implement this Looker + BQML block or customize to support multiple time series models in a single query or to support your unique use case.</font></b>
-
----
 
 ## Block Requirements
 ### 1. An existing [BigQuery database connection](https://docs.looker.com/setup-and-management/database-config/google-bigquery#overview):
@@ -38,14 +35,9 @@ With Looker + BQML, the forecasts and analysis are directly in the hands of busi
 
 During installation you will be asked for the connection and dataset name. These values will be added as constants to the Block's project manifest file. These constants will be referenced throughout the Block as ARIMA models are created.
 
----
  <font size = "3"><font color = "red"> <i class='fa fa-exclamation-triangle'></i><b> note:  BigQuery ML processes and stages data in the same location.</b></font></font><br> See [BigQuery ML Locations](https://cloud.google.com/bigquery-ml/docs/locations) for more details. The example Explore included in this Block is based on BigQuery public dataset stored in the `US` multi-region location. Therefore, to use the Block’s example Explore you should name a dataset also located in the `US` multi-region. To use this Block with data stored in region or multi-region outside of the `US`, name a ARIMA model dataset located in the same region or multi-region and use refinements to hide the example Explore as it will not work in regions outside of the `US`.
 
-
  <font size = "3"><font color="red"><i class='fa fa-exclamation-triangle'></i><b> note: This Block is intended to be used with only one data connection and one dataset for model processing.</b></font></font><br>If you would like to use Block with multiple data connections, customization of the Block is required. Reach out to your Looker account team for more information and guidance from Looker Professional Services.
-
----
-
 
 ## Installation Steps
 1. From the Looker Marketplace page for [BigQuery ML Time-Series Forecasting Block](/marketplace/view/bqml-arima), click `INSTALL` button
@@ -63,10 +55,7 @@ Upon successful completion of the installation, a green Check Mark and bar will 
 | explore | BQML ARIMA Plus: Google Analytics Forecast | found in Explore menu under Looker + BigQuery ML |
 | explore | BQML ARIMA Plus: Model Info  | found in Explore menu under Looker + BigQuery ML; captures details for each ARIMA model created with the Block |
 
----
  <font size = "3"><font color="red"><i class='fa fa-exclamation-triangle'></i><b> note:  The marketplace_bqml-arima project is installed as a bare GIT repository.</b></font></font><br>For version control utilizing a remote repository, you will need to [update the connection settings for your Git repository](https://docs.looker.com/data-modeling/getting-started/setting-up-git-connection).
-
----
 
 At this point you can begin creating your own Explores incorporating the ARIMA model workflow (see next section for details on building your own Explores) or navigate to the included explore example and create an ARIMA model.
 
@@ -92,11 +81,7 @@ At a high-level the steps for each use case are:
 
 Details and code examples for each step are provided next. Note, all steps take place in `marketplace_bqml-arima` project while in **development mode**.
 
----
  <font size = "3"><font color="red"><i class='fa fa-exclamation-triangle'></i><b> note:  If copying/pasting example LookML from this document, ensure quotation marks are straight quotes (") </b></font></font><br>When pasting from this document, quotations may appear as curly or smart quotes (“). If necessary, re-type quotes in the LookML IDE to change to straight quotes.
-
----
-
 
 ### 1. Create Folder for all Use Case files (one folder per use case)
 When you open the `marketplace_bqml-arima` project while in development mode and review the `File Browser` pane, you will see the project contains a folder called `imported_projects`. Expanding this folder you will see a subfolder named `bqml-arima`. This folder contains all the models, explores and views for the Block. These files are read-only; however, we will be including these files in the use case model and refining/extending a select few files to support the use case. You should keep all files related to the use case in a single folder. Doing so will allow easy editing of a use case. Within the project, you should create a separate folder for each use case.
@@ -124,10 +109,8 @@ Add a new model file for the use case, update the connection, and add include st
 | Add an include statement for the Block's `bqml-arima.explore` so the file is available to this use case model and can be extended into the new Explore created in the next step.| include: "//bqml-arima/**/bqml_arima.explore" |
 | Click `SAVE` | |
 
-
 ### 3. Make Refinements of select Explores and Views from the Block
 Just like we used the bqml-arima explore as a building block for the use case explore, we will adapt the Block's `input_data.view`, `model_name_suggestions.explore` and `arima_training_data.view` for the use case using LookML refinements syntax. To create a refinement you add a plus sign (+) in front of the name to indicate that it's a refinement of an existing view. All the parameters of the existing view will be used and select parameters can be modified (i.e., overwrite the original value). For detailed explanation of refinements, refer to the [LookML refinements](https://docs.looker.com/data-modeling/learning-lookml/refinements) documentation page. Within the use case folder, add a new `input_data.view`, a new `model_name_suggestions.explore` and optionally add a new `arima_training_data.view`. Keep reading for detailed steps for each refinement file.
-
 
 #### <font size=5>3a. input_data.view </font><font color='red'> (REQUIRED)
 
@@ -153,11 +136,7 @@ An ARIMA PLUS model uses past values in a time series to predict (forecast) futu
 | Review the remaining LookML and edit as necessary with:<br>a. names, labels, group labels, descriptions<br>b. identify the primary key field<br>c. Modify date formats as necessary. For example, dates are automatically defined as a `dimension_group with type of time` so modify as necessary for timeframes or convert to a single date dimension.<d> Add any additional measures if needed (only the count measure is created by default) | dimension: create_month {<br>  type: date<br>  primary_key: yes<br>  sql: <br>${TABLE}.create_month ;;<br>} |
 | Click `SAVE` | |
 
----
    <font size = "3"><font color="red"><i class='fa fa-exclamation-triangle'></i><b> note: Avoid using BigQuery analytic functions such as ROW_NUMBER() OVER() in the SQL definition of a use case's input data.</b></font></font> Including analytic functions may cause BigQuery to return an `InternalError` code when used with BigQuery ML functions. If your input data is missing a primary key, CONCAT(*field_1, field_2, ...*) two or more columns to generate a unique ID instead of using ROW_NUMBER() OVER().
-
----
-
 
 #### <font size=5>3b. model_name_suggestions.explore </font><font color='red'> (REQUIRED)
 To create an ARIMA model, the user must enter a name for the model and can type in any string value. The ARIMA Explore also allows the user to evaluate a model which has already been created. The `Model Name` parameter allows users to select the name from a list of existing models created by the given Explore. These suggested values come from the `BQML_ARIMA_MODEL_INFO` table stored in the Model Details dataset defined for the Block during installation. Because this table captures details for all models created with the Block across all Explores, we need to filter the suggestions by Explore name–the Explore which will be created next in `Implementation Step 4`. If you do not filter for the use case Explore, an error would occur if the user tries to evaluate a model based on different time series data.
@@ -173,7 +152,6 @@ The name suggestions come from the `model_name_suggestions.explore` and in this 
 | Click `CREATE` |
 | On line 1 of the blank file, insert include statement for the Block explore to be refined | include: "//bqml-arima/**/model_name_suggestions.explore" |
 | On the next lines, enter<br> a. the explore name using the + refinement syntax<br> b. update sql_always_where syntax with use case explore name | explore: +model_name_suggestions {<br>  sql_always_where: ${model_info.explore} =<font color='orange'><b>'monthly_sales_arima'</b></font>;;<br>} |
-
 
 #### <font size=5>3c. arima_training_data.view </font><font color='red'> (OPTIONAL)
 As part of the create ARIMA model workflow, the user is required to include the `Select a Time Field` parameter and pick the field that uniquely identifies each point of the time series. By default the list of suggested fields comes from all the columns defined in the `input_data.view` and cannot be filtered to include only dates and times (as data types cannot be determined). If the list of columns in the input_data view is large, the user may have difficulty finding the time series field.
@@ -204,7 +182,6 @@ As noted earlier, all the files related to this Block are found in the `imported
 | Add Explore LookML which <br> a. includes label, group_label and/or description relevant to your use case<br>b. extends the bqml-arima explore<br>c. updates the join parameters of `arima_explain_forecast` and `arima_detect_anomalies` to reflect correct date/time field to properly join to `input_data` <br> <br>The BQML ARIMA PLUS model output generates a forecast for the unit of time modeled (named __time_series_timestamp__ and defined as time dimension_group). <br><br>In the previous section, you defined the `input_data` view and the date/time field for the time series to be modeled (e.g., create_date, create_month). Because the ARIMA output produces a timestamp field with the generic name of `time_series_raw`, you will need to update the Explore to incorporate the correct join relationships between the `input_data` time series field and the time series field in ARIMA Forecasts and Anomaly Detection. Be sure to reference a timestamp field or if the time series is defined as a dimension group of `type: time` use the `raw` reference (e.g., ${create_date_raw}).  |explore: <font color='orange'><b>monthly_sales_arima</b></font> {<br>  label: <font color='orange'>"BQML ARIMA Plus: Monthly Sales ARIMA"</font><br>  description: <font color='orange'>"Use this Explore to create BQML ARIMA Plus models to forecast monthly sales"</font><br><br>  extends: [bqml_arima] <br><br>   join: arima_explain_forecast {<br>    type:full_outer<br>    relationship: one_to_one<br>    sql_on: <font color = 'orange'><b>${input_data.create_date_raw}</b></font> = ${arima_explain_forecast.time_series_raw} ;;<br>  } <br><br> join: arima_detect_anomalies {<br>    type:left_outer<br>    relationship: one_to_one<br>    sql_on: <font color = 'orange'><b>${input_data.create_date_raw}</b></font> = ${arima_detect_anomalies.time_series_raw} ;; <br>}|
 | Click `SAVE`| |
 
-
 ## ARIMA Plus CREATE MODEL Syntax
 
 With this block, the user will be able to control these options for the ARIMA Plus Model:
@@ -221,12 +198,10 @@ The `time_series_id_col` which allows you to forecast multiple time series in a 
 
 Note, this block could be customized to include additional options and parameters.
 
-
 ## Enabling Business Users
 
 This block comes with a [Quick Start Guide for Business Users](https://github.com/looker/block-bqml-arima/blob/master/QUICK_START_GUIDE.md) and the following example Explore for enabling business users.
 - BQML ARIMA Plus: Google Analytics Forecast
-
 
 ## Resources
 
@@ -238,9 +213,7 @@ This block comes with a [Quick Start Guide for Business Users](https://github.co
 
 [BigQuery ML Locations](https://cloud.google.com/bigquery-ml/docs/locations)
 
-
 ### Find an error or have suggestions for improvements?
 Blocks were designed for continuous improvement through the help of the entire Looker community, and we'd love your input. To log an error or improvement recommendations, simply create a "New Issue" in the corresponding Github repo for this Block. Please be as detailed as possible in your explanation, and we'll address it as quickly as we can.
-
 
 #### Author: Google
